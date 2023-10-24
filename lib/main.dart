@@ -44,6 +44,10 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration(
             border: Border.all(),
             color: Colors.black26,
+            image: DecorationImage(
+              image: AssetImage('Assets/images/doctor.jpg'),
+              fit: BoxFit.cover
+            )
           ),
           //image: NetworkImage('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.travelandleisure.com%2Ftrip-ideas%2Fspace-astronomy%2Fearth-from-space&psig=AOvVaw0_u0-8yF0ZvEqhIbO7mifc&ust=1696921595672000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMjumdqz6IEDFQAAAAAdAAAAABAE'),
           child:Form(
@@ -53,9 +57,15 @@ class _HomeState extends State<Home> {
               children: [
                 //image: NetworkImage('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.travelandleisure.com%2Ftrip-ideas%2Fspace-astronomy%2Fearth-from-space&psig=AOvVaw0_u0-8yF0ZvEqhIbO7mifc&ust=1696921595672000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMjumdqz6IEDFQAAAAAdAAAAABAE'),
                 Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 20,
+                  color: Colors.cyan,
+                  child: Text("Please Enter your symptoms separated by coma('  ,  ')"),
+                )
+                ,Container(
                   height: 400,
                   decoration: BoxDecoration(
-                    border: Border.all(),
+                    //border: Border.all(),
                   ),
                   width: MediaQuery.of(context). size. width,
                   child: ListView.builder(reverse:true,itemCount:arr.length,itemBuilder: (context,index){
@@ -83,7 +93,7 @@ class _HomeState extends State<Home> {
                             children: [
                               Text("Bot"),
                               SizedBox(height: 10,),
-                              Text("${brr[arr.length-index-1]}")
+                              Text("${brr[brr.length-index-1]}")
                             ],
                           ),
                         )
@@ -103,6 +113,7 @@ class _HomeState extends State<Home> {
                           minLines: 1,
                           maxLines: 5,
                           keyboardType: TextInputType.multiline,
+                          style: TextStyle(color: Colors.white),
                           onChanged: (value)
                           {
                             _str=value.toString();
@@ -111,26 +122,30 @@ class _HomeState extends State<Home> {
                           decoration: InputDecoration(
                               hintText: 'Enter a message here',
                               hintStyle: TextStyle(
-                                  color: Colors.grey
+                                  color: Colors.white
                               ),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10))
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                borderSide: new BorderSide(
+                                  color: Colors.white,
+                                  width: 1.0,
+                                ),
                               )
                           ),
                         )
                       ),
                       IconButton(onPressed: ()async{
-                        _url=_link+_str;
+                        _url=_Link+_str;
                         data=await fetchdata(_url);
                         var decode=jsonDecode(data);
                         setState(() {
                           arr.add(_str);
                           _textController.clear();
-                          brr.add(decode['cnt']);
+                          brr.add("You may have "+decode[0]);
                           //print("decode['output']");
                           _c++;
                         });
-                      }, icon: Icon(Icons.send))
+                      }, color: Colors.white,icon: Icon(Icons.send))
                     ],
                 )
               ],
